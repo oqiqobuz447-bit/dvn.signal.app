@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>𝐑𝐀𝐁𝐁𝐈 𝐇𝐀𝐂𝐊 𝐒𝐈𝐆𝐍𝐀𝐋</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@400;500;700&display=swap');
+
+        :root {
+            --primary: #ff2040;
+            --win: #00ff88;
+            --loss: #ff4444;
+            --gold: #ffcc00;
+            --bg: #0b0b1a;
+            --card-bg: rgba(10, 10, 30, 0.85);
+            --glass: rgba(255, 255, 255, 0.04);
+            --border: rgba(255, 32, 64, 0.25);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background: radial-gradient(circle at 20% 30%, #1a0a2e, #0b0b1a 80%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding-bottom: 70px;
+            display: flex;
+            justify-content: center;
+        }
+
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a1a2e;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 8px;
+        }
+
+        .container {
+            max-width: 480px;
+            width: 100%;
+            padding: 12px 16px 20px;
+        }
+
+        /* ─── HEADER with smaller logo ─── */
+        .brand-header {
+            text-align: center;
+            padding: 8px 0 12px;
+            position: relative;
+            margin-bottom: 8px;
+        }
+
+        .brand-header .logo-wrap {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 6px;
+        }
+
+        .brand-header .title-img {
+            max-width: 180px;
+            width: 100%;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(255, 32, 64, 0.2);
+            border: 1px solid rgba(255, 32, 64, 0.2);
+            transition: transform 0.2s;
+        }
+
+        .brand-header .title-img:hover {
+            transform: scale(1.02);
+        }
+
+        .brand-header .brand-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.3em;
+            font-weight: 900;
+            background: linear-gradient(45deg, var(--primary), #ff66aa, var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(255, 32, 64, 0.15);
+            letter-spacing: 0.5px;
+            line-height: 1.2;
+        }
+
+        .brand-header .brand-sub {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.6em;
+            color: var(--gold);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            opacity: 0.8;
+            margin-top: -2px;
+        }
+
+        .brand-header .owner-credit {
+            font-size: 0.7em;
+            color: #aaa;
+            margin-top: 2px;
+        }
+        .brand-header .owner-credit span {
+            color: var(--gold);
+            font-weight: 700;
+            font-family: 'Orbitron', monospace;
+        }
+
+        .status-badge {
+            display: inline-block;
+            background: rgba(255, 32, 64, 0.12);
+            padding: 2px 14px;
+            border-radius: 30px;
+            font-size: 0.55em;
+            color: var(--primary);
+            border: 1px solid rgba(255, 32, 64, 0.2);
+            font-family: 'Orbitron', monospace;
+            letter-spacing: 0.5px;
+            margin-top: 4px;
+        }
+
+        /* ─── STATS CARD ─── */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            background: var(--card-bg);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border-radius: 16px;
+            padding: 12px 8px;
+            margin-bottom: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            box-shadow: var(--shadow);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-item .stat-label {
+            font-size: 0.55em;
+            text-transform: uppercase;
+            color: #888;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+        }
+
+        .stat-item .stat-value {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.1em;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.3;
+        }
+
+        .stat-item .stat-value.win {
+            color: var(--win);
+        }
+        .stat-item .stat-value.loss {
+            color: var(--loss);
+        }
+        .stat-item .stat-value.gold {
+            color: var(--gold);
+        }
+        .stat-item .stat-value.primary {
+            color: var(--primary);
+        }
+
+        /* ─── MAIN PREDICTION CARD ─── */
+        .main-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 20px 16px;
+            text-align: center;
+            box-shadow: var(--shadow), 0 0 40px rgba(255, 32, 64, 0.05);
+            margin-bottom: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .main-card:hover {
+            border-color: rgba(255, 32, 64, 0.5);
+        }
+
+        .module-badge {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.55em;
+            background: rgba(255, 32, 64, 0.12);
+            color: var(--primary);
+            padding: 2px 14px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 32, 64, 0.2);
+            letter-spacing: 2px;
+            display: inline-block;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .period-live {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 4px;
+        }
+
+        .period-display {
+            font-family: 'Orbitron', monospace;
+            color: var(--gold);
+            font-size: 0.7em;
+            background: rgba(255, 204, 0, 0.06);
+            padding: 4px 14px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 204, 0, 0.12);
+            letter-spacing: 0.5px;
+        }
+
+        .live-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.6em;
+            color: var(--win);
+            font-family: 'Orbitron', monospace;
+            background: rgba(0, 255, 136, 0.06);
+            padding: 2px 12px;
+            border-radius: 30px;
+            border: 1px solid rgba(0, 255, 136, 0.12);
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--win);
+            display: inline-block;
+            animation: pulse-dot 1.5s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0% {
+                opacity: 0.3;
+                transform: scale(0.8);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+            100% {
+                opacity: 0.3;
+                transform: scale(0.8);
+            }
+        }
+
+        .timer {
+            font-family: 'Orbitron', monospace;
+            font-size: 3em;
+            color: var(--gold);
+            line-height: 1.2;
+            text-shadow: 0 0 30px rgba(255, 204, 0, 0.1);
+            margin: 4px 0 2px;
+        }
+
+        .prediction-box {
+            background: var(--glass);
+            border-radius: 16px;
+            padding: 14px 12px 12px;
+            margin-top: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .prediction-box .label {
+            font-size: 0.55em;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 2px;
+        }
+
+        .next-pred {
+            font-size: 2.4em;
+            font-weight: 900;
+            font-family: 'Orbitron', monospace;
+            text-shadow: 0 0 25px currentColor;
+            line-height: 1.2;
+        }
+
+        #nextOpps {
+            margin-top: 4px;
+            color: var(--gold);
+            font-size: 0.8em;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        /* ─── BETTING SYSTEM CARD ─── */
+        .betting-system {
+            background: var(--card-bg);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 204, 0, 0.15);
+            border-radius: 16px;
+            padding: 14px 12px;
+            margin-bottom: 14px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .betting-system .bs-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.7em;
+            color: var(--gold);
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .bs-level {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+
+        .bs-level .level-label {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.85em;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .bs-level .level-value {
+            font-family: 'Orbitron', monospace;
+            font-size: 1em;
+            color: #fff;
+            background: rgba(255, 32, 64, 0.12);
+            padding: 2px 12px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+        }
+
+        .bs-amounts {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 6px;
+            margin-top: 4px;
+        }
+
+        .bs-amount {
+            background: rgba(255, 255, 255, 0.04);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-family: 'Orbitron', monospace;
+            font-size: 0.75em;
+            color: #ccc;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            transition: 0.2s;
+        }
+
+        .bs-amount.highlight {
+            border-color: var(--gold);
+            color: var(--gold);
+            background: rgba(255, 204, 0, 0.06);
+        }
+
+        .bs-total {
+            margin-top: 6px;
+            font-size: 0.7em;
+            color: #888;
+        }
+        .bs-total span {
+            color: var(--gold);
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+        }
+
+        /* ─── HISTORY ─── */
+        .history-section {
+            background: var(--card-bg);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 14px;
+            box-shadow: var(--shadow);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+            font-size: 0.7em;
+        }
+
+        th {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 10px 4px;
+            color: #999;
+            text-transform: uppercase;
+            font-size: 0.6em;
+            letter-spacing: 0.5px;
+            font-weight: 700;
+        }
+
+        td {
+            padding: 9px 4px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            font-weight: 500;
+        }
+
+        .result-win,
+        .result-loss {
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+        .result-win {
+            color: var(--win);
+        }
+        .result-loss {
+            color: var(--loss);
+        }
+
+        /* ─── BUY / FEATURES ─── */
+        .buy-section {
+            background: var(--card-bg);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 204, 0, 0.15);
+            border-radius: 16px;
+            padding: 14px 12px;
+            margin-bottom: 12px;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .buy-section .buy-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 0.85em;
+            color: var(--gold);
+            font-weight: 700;
+            letter-spacing: 0.3px;
+        }
+
+        .buy-section .buy-title .arrow {
+            color: var(--primary);
+        }
+
+        .buy-section .owner-tag {
+            font-size: 0.9em;
+            font-weight: 700;
+            color: #fff;
+            background: rgba(255, 204, 0, 0.08);
+            display: inline-block;
+            padding: 3px 16px;
+            border-radius: 30px;
+            margin: 6px 0 4px;
+            border: 1px solid rgba(255, 204, 0, 0.15);
+        }
+        .buy-section .owner-tag span {
+            color: var(--gold);
+            font-family: 'Orbitron', monospace;
+        }
+
+        .buy-section .proof-text {
+            font-size: 0.7em;
+            color: #888;
+            margin-top: 4px;
+        }
+        .buy-section .proof-text span {
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px 10px;
+            margin: 10px 0 2px;
+            text-align: left;
+        }
+
+        .features-grid .feat {
+            font-size: 0.7em;
+            color: #bbb;
+            padding: 4px 0;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .features-grid .feat .icon {
+            font-size: 1em;
+            flex-shrink: 0;
+        }
+        .features-grid .feat .highlight {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .features-grid .feat-full {
+            grid-column: 1 / -1;
+            text-align: center;
+            color: var(--gold);
+            font-weight: 700;
+            font-size: 0.75em;
+            padding: 6px 0 2px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: 4px;
+        }
+
+        /* ─── SETTINGS ─── */
+        .settings-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(4px);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 16px;
+            margin-top: 12px;
+            box-shadow: var(--shadow);
+        }
+
+        .settings-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+        .settings-item:last-child {
+            border-bottom: none;
+        }
+        .settings-item label {
+            color: #999;
+            font-size: 0.8em;
+        }
+        .settings-item span {
+            color: var(--primary);
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+            font-size: 0.75em;
+        }
+
+        .settings-card .owner-box {
+            text-align: center;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            color: #888;
+            font-size: 0.75em;
+        }
+        .settings-card .owner-box strong {
+            color: var(--gold);
+            font-family: 'Orbitron', monospace;
+            font-size: 1.1em;
+        }
+
+        /* ─── PAGES ─── */
+        .page {
+            display: none;
+            width: 100%;
+        }
+        .page.active {
+            display: block;
+        }
+
+        #gamePage iframe {
+            width: 100%;
+            height: calc(100vh - 140px);
+            min-height: 460px;
+            border: none;
+            border-radius: 16px;
+            margin-top: 4px;
+            background: #000;
+            box-shadow: var(--shadow);
+        }
+
+        /* ─── BOTTOM NAV ─── */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background: rgba(10, 10, 30, 0.9);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: flex;
+            border-top: 1px solid var(--border);
+            z-index: 9999;
+        }
+
+        .nav-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            cursor: pointer;
+            font-family: 'Orbitron', monospace;
+            font-size: 8px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            transition: 0.2s;
+            gap: 2px;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .nav-item .nav-icon {
+            font-size: 20px;
+            line-height: 1;
+        }
+        .nav-item.active {
+            color: var(--primary);
+            background: rgba(255, 32, 64, 0.06);
+        }
+
+        /* ─── OVERLAY ─── */
+        #animation-overlay {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            font-size: 2.8em;
+            font-family: 'Orbitron', monospace;
+            z-index: 10001;
+            pointer-events: none;
+            opacity: 0;
+            transition: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            font-weight: 900;
+            text-shadow: 0 0 50px currentColor, 0 0 100px currentColor;
+        }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 420px) {
+            .container {
+                padding: 8px 12px 16px;
+            }
+            .brand-header .title-img {
+                max-width: 140px;
+            }
+            .brand-header .brand-title {
+                font-size: 1.1em;
+            }
+            .timer {
+                font-size: 2.5em;
+            }
+            .next-pred {
+                font-size: 2em;
+            }
+            .stats-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 4px;
+                padding: 10px 4px;
+            }
+            .stat-item .stat-value {
+                font-size: 1em;
+            }
+            .stat-item .stat-label {
+                font-size: 0.5em;
+            }
+            table {
+                font-size: 0.6em;
+            }
+            th,
+            td {
+                padding: 6px 2px;
+            }
+            .features-grid .feat {
+                font-size: 0.65em;
+            }
+            .buy-section .buy-title {
+                font-size: 0.75em;
+            }
+            #animation-overlay {
+                font-size: 2.2em;
+            }
+            .bs-amount {
+                font-size: 0.65em;
+                padding: 2px 8px;
+            }
+        }
+
+        @media (min-width: 600px) {
+            .brand-header .title-img {
+                max-width: 220px;
+            }
+            .timer {
+                font-size: 4em;
+            }
+            .next-pred {
+                font-size: 3em;
+            }
+            .stats-grid {
+                gap: 12px;
+                padding: 16px 12px;
+            }
+            #animation-overlay {
+                font-size: 3.2em;
+            }
+        }
+
+        .text-muted {
+            color: #666;
+            font-size: 0.7em;
+        }
+        .mt-1 {
+            margin-top: 6px;
+        }
+        .mb-1 {
+            margin-bottom: 6px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- WIN/LOSS OVERLAY -->
+    <div id="animation-overlay">WIN</div>
+
+    <div id="mainApp">
+        <!-- ===== HACK PAGE ===== -->
+        <div class="page active" id="hackPage">
+            <div class="container">
+
+                <!-- HEADER with smaller logo -->
+                <div class="brand-header">
+                    <div class="logo-wrap">
+                        <img class="title-img"
+                        src="https://i.ibb.co.com/1G430XKW/IMG-20260722-193744-439.jpg"
+                        alt="NIRVOY 𝐇𝐀𝐂𝐊 𝐒𝐈𝐆𝐍𝐀𝐋" loading="eager" />
+                    </div>
+                    <div class="brand-title">NIRVOY 𝐇𝐀𝐂𝐊 𝐒𝐈𝐆𝐍𝐀𝐋</div>
+                    <div class="brand-sub">NIRVOY 𝐕𝐀𝐈</div>
+                    <div class="owner-credit">
+                        👑 OWNER <span>@nirvoy7</span>
+                    </div>
+                    <div class="status-badge">◆ DEV UNLOCKED ◆</div>
+                </div>
+
+                <!-- STATS -->
+                <div class="stats-grid" id="statsGrid">
+                    <div class="stat-item">
+                        <div class="stat-label">Total</div>
+                        <div class="stat-value gold" id="totalGames">0</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Wins</div>
+                        <div class="stat-value win" id="totalWins">0</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Losses</div>
+                        <div class="stat-value loss" id="totalLosses">0</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Streak</div>
+                        <div class="stat-value primary" id="streakDisplay">0</div>
+                    </div>
+                </div>
+
+                <!-- MAIN PREDICTION CARD -->
+                <div class="main-card">
+                    <div class="module-badge">⚡ MAIN MODULE ⚡</div>
+                    <div class="period-live">
+                        <span class="period-display" id="periodDisplay">PERIOD: 20260713100010809</span>
+                        <span class="live-indicator">
+                            <span class="live-dot"></span> LIVE
+                        </span>
+                    </div>
+                    <div class="timer" id="timer">00:30</div>
+                    <div class="prediction-box">
+                        <div class="label">⚡ NEXT PREDICTION</div>
+                        <div class="next-pred" id="nextPrediction" style="color: var(--loss);">BIG</div>
+                        <div id="nextOpps">OPP NUM: 1, 0</div>
+                    </div>
+                </div>
+
+                <!-- ─── BETTING SYSTEM CARD ─── -->
+                <div class="betting-system" id="bettingSystem">
+                    <div class="bs-title">📊 BETTING SYSTEM</div>
+                    <div class="bs-level">
+                        <span class="level-label">LEVEL</span>
+                        <span class="level-value" id="currentLevelDisplay">1</span>
+                    </div>
+                    <div class="bs-amounts" id="bsAmounts">
+                        <!-- dynamically filled -->
+                    </div>
+                    <div class="bs-total">
+                        TOTAL: <span id="bsTotal">0</span>
+                    </div>
+                </div>
+
+                <!-- HISTORY -->
+                <div class="history-section">
+                    <table>
+                        <thead>
+                            <tr><th>PRD</th><th>LVL</th><th>PRED</th><th>OPP</th><th>RES</th></tr>
+                        </thead>
+                        <tbody id="logs"></tbody>
+                    </table>
+                </div>
+
+                <!-- BUY & FEATURES -->
+                <div class="buy-section">
+                    <div class="buy-title">
+                        <span class="arrow">🔻</span> HACK BUY DIRECT FROM DEVELOPER <span class="arrow">🔺</span>
+                    </div>
+                    <div class="owner-tag">
+                        🔺 <span>@nirvoy7</span> ✅
+                    </div>
+                    <div class="proof-text">
+                        💠 Proof &amp; Feedback &nbsp; <span>@nirvoy7</span> 💠
+                    </div>
+                </div>
+
+                <div class="buy-section" style="border-color:rgba(255,32,64,0.1);padding:12px 12px 8px;">
+                    <div style="font-family:'Orbitron',monospace;font-size:0.7em;color:var(--gold);letter-spacing:1px;margin-bottom:4px;">
+                        ⚡ FEATURES
+                    </div>
+                    <div class="features-grid">
+                        <div class="feat"><span class="icon">👁️⚡</span> Auto Prediction <span class="highlight">Every Minute</span></div>
+                        <div class="feat"><span class="icon">👁️🎯</span> Big/Small <span class="highlight">Smart Logic</span></div>
+                        <div class="feat"><span class="icon">👁️🔓</span> No Login <span class="highlight">Instant Access</span></div>
+                        <div class="feat"><span class="icon">👁️🌙</span> Clean Dark UI <span class="highlight">Ad Free</span></div>
+                        <div class="feat"><span class="icon">👁️📶</span> Works Online <span class="highlight">Low Internet</span></div>
+                        <div class="feat"><span class="icon">👁️👑</span> VIP Panel <span class="highlight">Fully Unlocked</span></div>
+                        <div class="feat-full">🎚️ 𝗦𝗣𝗘𝗖𝗜𝗔𝗟 𝗧𝗢𝗢𝗟𝗦</div>
+                        <div class="feat"><span class="icon">🎚️🚀</span> One-Tap Prediction</div>
+                        <div class="feat"><span class="icon">🎚️⏱️</span> Smart Timer Sync</div>
+                        <div class="feat"><span class="icon">🎚️📊</span> Win/Loss Tracker</div>
+                        <div class="feat"><span class="icon">🎚️🔥</span> High Accuracy Predictor</div>
+                        <div class="feat-full" style="border-top-color:rgba(255,255,255,0.05);color:var(--gold);font-weight:700;">
+                            🗓️💸 MINIMUM 300 DEPOSIT 🌟
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ===== GAME PAGE ===== -->
+        <div class="page" id="gamePage">
+            <div class="container" style="padding-top:4px;">
+                <iframe src="https://hgnice.bet/#/register?invitationCode=1188582"
+                allow="fullscreen"
+                loading="lazy"
+            title="Game Register"></iframe>
+        </div>
+    </div>
+
+    <!-- ===== SETTINGS PAGE ===== -->
+    <div class="page" id="settingsPage">
+        <div class="container">
+            <div style="text-align:center;padding-top:6px;">
+                <div style="font-family:'Orbitron',monospace;font-size:1.2em;color:var(--primary);">⚙ SETTINGS</div>
+                <div style="font-size:0.6em;color:#555;margin-top:2px;">𝐑𝐀𝐁𝐁𝐈 𝐇𝐀𝐂𝐊 𝐒𝐈𝐆𝐍𝐀𝐋 · DEV 1.3</div>
+            </div>
+            <div class="settings-card">
+                <div class="settings-item"><label>App Version</label><span>DEV 1.3</span></div>
+                <div class="settings-item"><label>Server Status</label><span style="color:var(--win);">ONLINE</span></div>
+                <div class="settings-item"><label>License</label><span style="color:var(--gold);">UNLOCKED</span></div>
+                <div class="settings-item"><label>Key Validity</label><span>300 DAYS</span></div>
+                <div class="settings-item" style="border:none;"><label>Mode</label><span style="color:var(--gold);">VIP</span></div>
+
+                <div class="owner-box">
+                    👑 <strong>@nirvoy7</strong> 👑<br />
+                    <span style="font-size:0.75em;color:#555;">DM for support &amp; upgrades</span>
+                </div>
+            </div>
+
+            <div style="margin-top:12px;background:var(--card-bg);backdrop-filter:blur(4px);border-radius:16px;padding:12px 14px;border:1px solid rgba(255,255,255,0.04);text-align:center;font-size:0.65em;color:#777;">
+                <div style="font-family:'Orbitron',monospace;color:var(--gold);font-size:0.9em;margin-bottom:4px;">⏱ GAME TIMINGS</div>
+                11:00 AM &nbsp;·&nbsp; 02:00 PM &nbsp;·&nbsp; 05:00 PM &nbsp;·&nbsp; 08:00 PM
+                <div style="margin-top:4px;color:#555;font-size:0.9em;">🎯 Play Daily · Min Deposit ₹300</div>
+            </div>
+
+            <div style="text-align:center;margin-top:14px;font-size:0.65em;color:#444;">
+                <span style="color:var(--gold);">@nirvoy7</span> &bull; All Rights Reserved
+            </div>
+        </div>
+    </div>
+
+    <!-- ─── BOTTOM NAV ─── -->
+    <div class="bottom-nav">
+        <div class="nav-item active" id="navHack" onclick="switchTab('hack')">
+            <span class="nav-icon">🎯</span> HACK
+        </div>
+        <div class="nav-item" id="navGame" onclick="switchTab('game')">
+            <span class="nav-icon">🎮</span> GAME
+        </div>
+        <div class="nav-item" id="navSettings" onclick="switchTab('settings')">
+            <span class="nav-icon">⚙</span> SETTINGS
+        </div>
+    </div>
+
+</div>
+
+<!-- ─── SCRIPTS ─── -->
+<script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js">
+</script>
+<script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database-compat.js">
+</script>
+<script>
+    // ================= NAV =================
+    function switchTab(tab) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        document.getElementById(tab + 'Page').classList.add('active');
+        document.getElementById('nav' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.add('active');
+    }
+
+    // ================= BETTING SYSTEM DATA =================
+    const bettingTable = [
+        { level: 1, amounts: [1, 2, 5, 10, 20, 50, 100], total: 401 },
+        { level: 2, amounts: [2, 5, 10, 20, 40, 100, 200], total: 902 },
+        { level: 3, amounts: [4, 10, 25, 50, 100, 250, 500], total: 2410 },
+        { level: 4, amounts: [9, 20, 60, 120, 250, 600, 1200], total: 5150 },
+        { level: 5, amounts: [20, 45, 130, 250, 600, 1300, 2500], total: 11110 },
+        { level: 6, amounts: [45, 100, 280, 600, 1300, 2800, 5500], total: 24010 },
+        { level: 7, amounts: [100, 220, 600, 1300, 2800, 6000, 12000], total: 47000 },
+        { level: 8, amounts: [220, 500, 1300, 2800, 6000, 13000, 25000], total: 0 } // total from image is 47000? Actually row total not given, but we'll compute
+    ];
+    // Compute total for level 8 from sum of amounts
+    bettingTable[7].total = bettingTable[7].amounts.reduce((a, b) => a + b, 0);
+
+    // ================= PREDICTION ENGINE + STATS =================
+    let currentLevel = 1,
+        lastId = null,
+        savedPrediction = null,
+        savedOpps = [];
+
+    // Stats
+    let totalGames = 0,
+        totalWins = 0,
+        totalLosses = 0;
+    let streak = 0;
+
+    function updateStatsUI() {
+        document.getElementById('totalGames').textContent = totalGames;
+        document.getElementById('totalWins').textContent = totalWins;
+        document.getElementById('totalLosses').textContent = totalLosses;
+        const streakEl = document.getElementById('streakDisplay');
+        if (streak > 0) {
+            streakEl.textContent = '🔥' + streak;
+            streakEl.style.color = 'var(--win)';
+        } else if (streak < 0) {
+            streakEl.textContent = '❄️' + Math.abs(streak);
+            streakEl.style.color = 'var(--loss)';
+        } else {
+            streakEl.textContent = '—';
+            streakEl.style.color = '#888';
+        }
+    }
+
+    // Update betting system display
+    function updateBettingSystem() {
+        const levelData = bettingTable.find(d => d.level === currentLevel);
+        if (!levelData) return;
+
+        document.getElementById('currentLevelDisplay').textContent = currentLevel;
+
+        const container = document.getElementById('bsAmounts');
+        container.innerHTML = '';
+        levelData.amounts.forEach((amt, idx) => {
+            const span = document.createElement('span');
+            span.className = 'bs-amount';
+            // highlight the middle column (index 3) as default suggested bet
+            if (idx === 3) span.classList.add('highlight');
+            span.textContent = amt;
+            container.appendChild(span);
+        });
+
+        document.getElementById('bsTotal').textContent = levelData.total;
+    }
+
+    // ================= PREDICTION LOGIC =================
+    async function sync() {
+        try {
+            const res = await fetch('https://draw.ar-lottery01.com/WinGo/WinGo_1M/GetHistoryIssuePage.json');
+            const json = await res.json();
+            const latest = json.data.list[0];
+            const nextIssue = BigInt(latest.issueNumber) + 1n;
+            document.getElementById('periodDisplay').textContent = 'PERIOD: ' + nextIssue.toString();
+
+            if (lastId !== latest.issueNumber) {
+                handleNew(latest);
+                lastId = latest.issueNumber;
+            }
+            document.querySelector('.live-dot').style.backgroundColor = 'var(--win)';
+        } catch (e) {
+            document.querySelector('.live-dot').style.backgroundColor = 'var(--loss)';
+        }
+    }
+
+    function handleNew(latest) {
+        const num = parseInt(latest.number);
+        const actual = num >= 5 ? 'BIG' : 'SMALL';
+
+        if (savedPrediction) {
+            const win = (savedPrediction === actual) || savedOpps.includes(num);
+            animate(win);
+            addRow(latest.issueNumber, currentLevel, savedPrediction, savedOpps, win);
+
+            // Update stats
+            totalGames++;
+            if (win) {
+                totalWins++;
+                streak = streak > 0 ? streak + 1 : 1;
+                currentLevel = 1; // reset to level 1 on win
+            } else {
+                totalLosses++;
+                streak = streak < 0 ? streak - 1 : -1;
+                currentLevel = Math.min(currentLevel + 1, 8); // increment up to 8
+            }
+            updateStatsUI();
+            updateBettingSystem();
+        }
+        generate();
+    }
+
+    function generate() {
+        savedPrediction = Math.random() > 0.5 ? 'BIG' : 'SMALL';
+        const pool = savedPrediction === 'BIG' ? [0, 1, 2, 3, 4] : [5, 6, 7, 8, 9];
+        savedOpps = pool.sort(() => 0.5 - Math.random()).slice(0, 2);
+
+        const p = document.getElementById('nextPrediction');
+        p.textContent = savedPrediction;
+        p.style.color = savedPrediction === 'BIG' ? 'var(--loss)' : 'var(--win)';
+        document.getElementById('nextOpps').textContent = 'OPP NUM: ' + savedOpps.join(', ');
+    }
+
+    function addRow(period, level, pred, opps, win) {
+        const row = `<tr>
+            <td>${period.slice(-3)}</td>
+            <td style="color:var(--gold);font-weight:700;">L${level}</td>
+            <td style="color:${pred === 'BIG' ? 'var(--loss)' : 'var(--win)'};font-weight:700;">${pred}</td>
+            <td>${opps.join(',')}</td>
+            <td class="${win ? 'result-win' : 'result-loss'}">${win ? 'WIN' : 'LOSS'}</td>
+        </tr>`;
+        document.getElementById('logs').insertAdjacentHTML('afterbegin', row);
+        const tbody = document.getElementById('logs');
+        while (tbody.children.length > 30) tbody.removeChild(tbody.lastChild);
+    }
+
+    function animate(win) {
+        const o = document.getElementById('animation-overlay');
+        o.textContent = win ? '🏆 WIN' : '💔 LOSS';
+        o.style.color = win ? 'var(--win)' : 'var(--loss)';
+        o.style.opacity = '1';
+        o.style.transform = 'translate(-50%,-50%) scale(1.15)';
+        setTimeout(() => {
+            o.style.opacity = '0';
+            o.style.transform = 'translate(-50%,-50%) scale(0.8)';
+        }, 1800);
+    }
+
+    function updateTimer() {
+        const s = new Date().getSeconds();
+        const remaining = 60 - s;
+        document.getElementById('timer').textContent = '00:' + String(remaining).padStart(2, '0');
+    }
+
+    // ─── INIT ───
+    setInterval(sync, 2000);
+    setInterval(updateTimer, 1000);
+    updateTimer();
+
+    setTimeout(() => {
+        generate();
+        sync();
+        updateStatsUI();
+        updateBettingSystem();
+    }, 300);
+</script>
+
+</body>
+<!-- PREMIUM SPLASH SCREEN -->
+<div id="splash-screen">
+    <div class="splash-box">
+
+        <div class="logo">⚡</div>
+
+        <h1>ONLEY FOR VIP ACCESS</h1>
+
+        <p>
+            Join our Telegram Channels for latest updates,
+            premium tools & announcements.
+        </p>
+
+        <!-- Channel 1 -->
+        <a href=https://t.me/nirvoygamar"
+           target="_blank"
+           class="join-btn">
+            VIP
+        </a>
+
+        <!-- Channel 2 -->
+        <a href="https://t.me/nirvoygamar"
+           target="_blank"
+           class="join-btn second-btn">
+            🔥 ᯓ𓆰 ֟፝͠𝐅ʀᴇᴇ 𝐕ɪᴘ 𝐇ᴀᴄᴋ𝐬𓆪
+        </a>
+
+        <button class="skip-btn" onclick="closeSplash()">
+            Skip →
+        </button>
+
+    </div>
+</div>
+
+<style>
+#splash-screen{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:linear-gradient(135deg,#050505,#111,#050505);
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:99999;
+transition:.5s;
+}
+
+.splash-box{
+width:90%;
+max-width:360px;
+padding:30px;
+border-radius:25px;
+background:rgba(255,255,255,.05);
+backdrop-filter:blur(15px);
+border:1px solid rgba(57,255,20,.3);
+text-align:center;
+box-shadow:0 0 30px rgba(57,255,20,.2);
+animation:pop .8s;
+}
+
+@keyframes pop{
+from{transform:scale(.8);opacity:0;}
+to{transform:scale(1);opacity:1;}
+}
+
+.logo{
+width:90px;
+height:90px;
+margin:auto;
+border-radius:50%;
+background:#111;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:45px;
+color:#39ff14;
+border:2px solid #39ff14;
+box-shadow:0 0 25px #39ff14;
+animation:pulse 2s infinite;
+}
+
+@keyframes pulse{
+50%{
+box-shadow:0 0 45px #39ff14;
+transform:scale(1.08);
+}
+}
+
+h1{
+color:#39ff14;
+margin:20px 0 10px;
+letter-spacing:3px;
+font-size:28px;
+font-family:sans-serif;
+}
+
+p{
+color:#ccc;
+font-size:14px;
+line-height:22px;
+margin-bottom:25px;
+font-family:sans-serif;
+}
+
+.join-btn{
+display:block;
+padding:15px;
+margin-bottom:12px;
+border-radius:50px;
+background:#39ff14;
+color:#000;
+font-weight:bold;
+text-decoration:none;
+font-family:sans-serif;
+transition:.3s;
+}
+
+.join-btn:hover{
+transform:scale(1.05);
+box-shadow:0 0 20px #39ff14;
+}
+
+.second-btn{
+background:#00bfff;
+color:#fff;
+}
+
+.second-btn:hover{
+box-shadow:0 0 20px #00bfff;
+}
+
+.skip-btn{
+margin-top:10px;
+width:100%;
+padding:13px;
+border:none;
+border-radius:50px;
+background:#222;
+color:#fff;
+font-size:15px;
+cursor:pointer;
+transition:.3s;
+}
+
+.skip-btn:hover{
+background:#333;
+}
+
+.fade-out{
+opacity:0;
+pointer-events:none;
+}
+</style>
+
+<script>
+function closeSplash(){
+document.getElementById("splash-screen").classList.add("fade-out");
+
+setTimeout(()=>{
+document.getElementById("splash-screen").style.display="none";
+},500);
+}
+
+// Auto Hide after 10 seconds
+setTimeout(closeSplash,10000);
+</script>
+</html>
